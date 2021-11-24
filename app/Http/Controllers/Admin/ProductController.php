@@ -58,7 +58,7 @@ class ProductController extends Controller
         $product->categories()->sync($data['categories']); //grava com as categorias escolhidas na view       
 
         if($request->hasFile('photos')){
-            $images = $this->imageUpload($request, 'image');
+            $images = $this->uploadPhotos($request, 'image');
             $product->photos()->createMany($images);
 
         }
@@ -104,6 +104,12 @@ class ProductController extends Controller
         $product = $this->product->find($product);
         $product->update($data);
         $product->categories()->sync($data['categories']);
+
+        if($request->hasFile('photos')){
+            $images = $this->uploadPhotos($request, 'image');
+            $product->photos()->createMany($images);
+
+        }
        
         flash('Produto atualizado com sucesso')->success();
         return redirect()->route('admin.products.index');
