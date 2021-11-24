@@ -7,10 +7,13 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Store;
+use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+
+    use UploadTrait;
 
     private $product;
 
@@ -58,7 +61,7 @@ class ProductController extends Controller
         $product->categories()->sync($data['categories']); //grava com as categorias escolhidas na view       
 
         if($request->hasFile('photos')){
-            $images = $this->uploadPhotos($request, 'image');
+            $images = $this->imageUpload($request->file('photos'), 'image');
             $product->photos()->createMany($images);
 
         }
@@ -106,7 +109,7 @@ class ProductController extends Controller
         $product->categories()->sync($data['categories']);
 
         if($request->hasFile('photos')){
-            $images = $this->uploadPhotos($request, 'image');
+            $images = $this->imageUpload($request->file('photos'), 'image');
             $product->photos()->createMany($images);
 
         }
@@ -130,15 +133,5 @@ class ProductController extends Controller
 	    return redirect()->route('admin.products.index');
     }
 
-    private function uploadPhotos(Request $request, $imageColumn)
-    {
-        $images = $request->file('photos');
-
-        $uploadImages = [];
-        foreach($images as $image){
-            $uploadImages [] = [$imageColumn => $image->store('products', 'public')];
-        }
-
-        return $uploadImages;
-    }
+   
 }
