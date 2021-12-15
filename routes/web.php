@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\ProductPhotoController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Models\ProductPhoto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
+
+Route::get('/product/{$slug}', 'App\Http\Controllers\HomeController@single')->name('product.single');
+
+Route::prefix('cart')->name('cart.')->group(function(){
+    Route::post('add', 'App\Http\Controllers\CartController@add')->name('add');
+});
 
 Route::group(['middleware' => ['auth']],function () {
     Route::prefix('admin')->name('admin.')->namespace('App\Http\Controllers\Admin')->group(function(){
@@ -46,4 +52,4 @@ Route::group(['middleware' => ['auth']],function () {
 
 Auth::routes();
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
