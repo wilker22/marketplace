@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = $this->product->limit(8)->get();
+        $products = $this->product->limit(20)->get();
         //dd($products);
         return view('welcome', compact('products'));
     }
@@ -30,7 +30,6 @@ class HomeController extends Controller
     public function single($slug)
     {
         $product = $this->product->whereSlug($slug)->first();
-        
-        return view('single', compact($product));
+        return view('single', compact('product'));
     }
 }
