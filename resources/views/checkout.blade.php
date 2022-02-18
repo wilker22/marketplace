@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <form action="" method="post">
+        <form action="" method="POST">
             <div class="row">
                 <div class="col-md-12 form-group">
                         <label for="">Número do Cartão de Crédito <span class="brand"></span></label>
@@ -106,17 +106,28 @@
             });
         });
 
+        //Crio uma variável getHash que vai conter o valor da função
+        //que substitui a função getSenderHash, sendo esta "onSenderHashReady". 
+        let getHash = PagSeguroDirectPayment.onSenderHashReady(function(response){
+                        if(response.status == 'error') {
+                            console.log("caiu no erro do onSenderHashReady" + response.message);
+                            return false;
+                        }
+                        var hash = response.senderHash; //Hash estará disponível nesta variável.
+                    });
+
         function processPayment(token)
         {
             let data = {
-                token: token,
-                hash: PagSeguroDirectPayment.getSenderHash(),
-                installment: document.querySelector('select_installments').value
+                card_token: token,
+                hash: getHash(),
+                installment: document.querySelector('select.select_installments').value,
+                _token: '{{ csrf_token() }}'
             };
 
             $.ajax({
                 type: 'POST',
-                url: '';
+                url: '{{ route("checkout.proccess") }}';
                 data: data,
                 dataType: 'json',
                 success: function(res){

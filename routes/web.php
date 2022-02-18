@@ -31,6 +31,7 @@ Route::prefix('cart')->name('cart.')->group(function(){
 
 Route::prefix('checkout')->name('checkout.')->group(function(){
     Route::get('/', 'App\Http\Controllers\Checkoutcontroller@index')->name('index');
+    Route::post('/proccess', 'App\Http\Controllers\Checkoutcontroller@proccess')->name('proccess');
 });
 
 Route::group(['middleware' => ['auth']],function () {
