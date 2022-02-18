@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Payment\PagSeguro\CreditCard;
 use Illuminate\Http\Request;
 use Illuminate\View\ViewServiceProvider;
+use PhpParser\Node\Stmt\TryCatch;
 
 class CheckoutController extends Controller
 {
@@ -15,6 +16,8 @@ class CheckoutController extends Controller
         if(!auth()->check()){
             return redirect()->route('login');
         }
+
+        if(!session()->has('cart')) return redirect()->route('home');
 
         $this->makePagSeguroSession();
         
@@ -33,7 +36,8 @@ class CheckoutController extends Controller
     public function proccess(Request $request)
     {
         
-        $dataPost = $request->all();
+        try{
+            $dataPost = $request->all();
         $cartItems = session()->get('cart');
         $user = auth()->user();
         $reference = 'XPTO';
@@ -52,13 +56,34 @@ class CheckoutController extends Controller
 
             $user->orders()->create($userOrder);
 
+            session()->forget('cart');
+            session()->forget('pagseguro_session_code');
+
             return response()->json([
                 'data' => [
                     'status' => true,
-                    'message' => 'Peidido Criado com sucesso!'
+                    'message' => 'Pedido Criado com sucesso!',
+                    'order' => $reference
                 ]
             ]);
            
+
+        }catch (\Exception $e){
+            $message = env('APP_DEBUG') ? $e->getMessage() : 'Erro ao processar pedido!';
+            return response()->json([
+                'data' => [
+                    'status' => false,
+                    'message' => $message
+                ]
+            ], 401);
+           
+        }   
+    }
+
+
+    public function thanks()
+    {
+        return view('thanks');
     }
 
     private function makePagSeguroSession()
