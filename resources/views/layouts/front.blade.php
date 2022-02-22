@@ -31,6 +31,12 @@
             <li class="nav-item @if(request()->is('/')) active @endif">
                 <a class="nav-link" href="{{route('home')}}">Home <span class="sr-only">(current)</span></a>
             </li>
+
+            @foreach($categories as $category)
+                <li class="nav-item ">
+                    <a class="nav-link" href="#"> {{ $category->name }}</span></a>
+                </li>
+            @endforeach
         </ul>
 
     
