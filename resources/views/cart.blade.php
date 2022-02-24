@@ -38,7 +38,7 @@
                         
                         <td>R$ {{ number_format($subtotal, 2, ',', '.') }} </td>
                         <td>
-                            <a href="{{route('cart.remove', $c->slug)}}" class="btn btn-sm btn-danger">REMOVER</a>
+                            <a href="{{route('cart.remove', $c['slug'])}}" class="btn btn-sm btn-danger">REMOVER</a>
                         </td>
                     </tr>
                 @endforeach
