@@ -55,9 +55,10 @@ Route::group(['middleware' => ['auth']],function () {
          Route::resource('stores', StoreController::class);
          Route::resource('products', ProductController::class);
          Route::resource('categories', CategoryController::class);
-
+         
          Route::post('photos/remove', 'ProductPhotoController@removePhoto')->name('photo.remove');
          
+         Route::get('orders/my', 'OrdersController@index')->name('orders.my');
      });
      
 });

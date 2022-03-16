@@ -21,6 +21,9 @@
             
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
+                        <a class="nav-link @if(request()->route()->named('admin.orders*')) active @endif" aria-current="page" href="{{ route('admin.orders.my')}}">Meus Pedidos</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link @if(request()->route()->named('admin.stores*')) active @endif" aria-current="page" href="{{ route('admin.stores.index')}}">Lojas</a>
                     </li>
                     <li class="nav-item">
@@ -61,6 +64,7 @@
 
 
     <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

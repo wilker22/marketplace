@@ -18,7 +18,7 @@ class CheckoutController extends Controller
         }
 
         if(!session()->has('cart')) return redirect()->route('home');
-
+        
         $this->makePagSeguroSession();
         
        // var_dump(session()->get('pagseguro_session_code'));
@@ -38,12 +38,14 @@ class CheckoutController extends Controller
         
         try{
             $dataPost = $request->all();
-        $cartItems = session()->get('cart');
-        $user = auth()->user();
-        $reference = 'XPTO';
+            $user = auth()->user();
+            $cartItems = session()->get('cart');
+            $stores = array_unique(array_column($cartItems, 'store_id'));
+            $reference = 'XPTO';
        
-        $creditCardPayment = new CreditCard($cartItems, $user, $dataPost, $reference);
-        $result = $creditCardPayment.doPayment();
+            $creditCardPayment = new CreditCard($cartItems, $user, $dataPost, $reference);
+            
+            $result = $creditCardPayment->doPayment();
         
 
             $userOrder = [
@@ -54,7 +56,8 @@ class CheckoutController extends Controller
                 'store_id' => 42
             ];
 
-            $user->orders()->create($userOrder);
+          $userOrder = $user->orders()->create($userOrder);
+          $userOrder->stores()->sync($stores);
 
             session()->forget('cart');
             session()->forget('pagseguro_session_code');
