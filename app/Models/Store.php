@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\StoreReceiveNewOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -37,6 +38,14 @@ class Store extends Model
     public function orders()
     {
         return $this->belongsToMany(UserOrder::class,'order_store', 'store_id', 'order_id');
+    }
+
+    public function notifyStoreOwners($storesId)
+    {
+        $stores = $this->whereIn('id', $storesId)->get();
+        return $stores->map(function($store){
+            return $store->user;
+        })->each->notify(new StoreReceiveNewOrder());
     }
 
     
