@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
 
     <title>MarketPlace WTech</title>
 </head>
@@ -34,9 +35,15 @@
                     </li>
                                 
                 </ul>
-                <div class="d-flex">
+
+                <div class="my-2 my-lg-0">
                     <ul class="navbar-nav mr-auto">
-                        
+                        <li class="nav-item">
+                            <a href="{{route('admin.notifications.index')}}" class="nav-link">
+                                <span class="badge badge-danger">{{auth()->user()->unreadNotifications->count()}}</span>
+                                <i class="fa fa-bell"></i>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link" onclick="event.preventDefault(); document.querySelector('form.logout').submit()">Sair</a>
                             <form action="{{route('logout')}}" class="logout" method="post">

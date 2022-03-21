@@ -54,8 +54,10 @@ Route::group(['middleware' => ['auth']],function () {
              
          }); */
 
-         Route::get('notifications', 'NotificationController@notifications')->name('notification.index');
+         Route::get('notifications', 'NotificationController@notifications')->name('notifications.index');
          Route::get('notifications/read-all', 'NotificationController@readAll')->name('notifications.read.all');
+         Route::get('notifications/read/{notification}', 'NotificationController@read')->name('notifications.read');
+
 
          Route::resource('stores', StoreController::class);
          Route::resource('products', ProductController::class);
