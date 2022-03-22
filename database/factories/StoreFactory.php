@@ -14,11 +14,11 @@ class StoreFactory extends Factory
     public function definition()
     {
         return [
-             'name' => $this->faker->name(),
-             'description' => $this->faker->sentence(),
-             'phone' => $this->faker->phoneNumber(),
-             'mobile_phone' => $this->faker->phoneNumber(),
-             'slug' => $this->faker->slug()
+             'name' => $this->faker->name,
+             'description' => $this->faker->sentence,
+             'phone' => $this->faker->phoneNumber,
+             'mobile_phone' => $this->faker->phoneNumber,
+             'slug' => $this->faker->slug
 
         ];
     }

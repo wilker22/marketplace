@@ -19,7 +19,7 @@
                     <h3>
                         R$ {{number_format($product->price, '2', ',', '.' )}}
                     </h3>
-                    <a href="{{ route('product.single', $product->slug) }}" class="btn btn-success">Ver Produto</a>
+                    <a href="{{ route('product.single', ['slug' => $product->slug]) }}" class="btn btn-success">Ver Produto</a>
                 </div>
             </div>
         </div>
