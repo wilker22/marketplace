@@ -38,10 +38,11 @@ Route::prefix('checkout')->name('checkout.')->group(function(){
     Route::get('/thanks', 'App\Http\Controllers\Checkoutcontroller@thanks')->name('thanks');
 });
 
-Route::group(['middleware' => ['auth']],function () {
+Route::get('my-orders', 'App\Http\Controllers\UserOrderController@index')->name('user.orders')->middleware('auth');
 
-    Route::get('my-orders', 'App\Http\Controllers\UserOrderController@index')->name('user.orders');
+Route::group(['middleware' => ['auth', 'access.control.store.admin']],function () {
 
+    
     Route::prefix('admin')->name('admin.')->namespace('App\Http\Controllers\Admin')->group(function(){
         /*  Route::prefix('stores')->name('stores.')->group(function(){
      
