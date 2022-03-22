@@ -51,4 +51,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserOrder::class);
     }
+
+    public function routeNotificationFor($notification = null)
+    {
+        $storeMobilePhoneNumber = trim(str_replace(['(',')',' ','-'], '', $this->store->mobile_phone));
+        return '55'.$storeMobilePhoneNumber;
+    }
 }

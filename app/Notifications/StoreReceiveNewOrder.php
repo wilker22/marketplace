@@ -29,7 +29,7 @@ class StoreReceiveNewOrder extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        return ['database', 'mail', 'nexmo'];
     }
 
     /**
@@ -59,5 +59,14 @@ class StoreReceiveNewOrder extends Notification
         return [
             'message' => 'Você tem um novo pedido caastrado!'
         ];
+    }
+
+    public function toNexmo($notifiable)
+    {
+        
+        return (new NexmoMessage)
+                        ->content('Você recebeu um novo pedido em nosso site!')
+                        ->from('5587988273964')
+                        ->unicode();
     }
 }
