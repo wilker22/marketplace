@@ -33,9 +33,11 @@ Route::prefix('cart')->name('cart.')->group(function(){
 });
 
 Route::prefix('checkout')->name('checkout.')->group(function(){
-    Route::get('/', 'App\Http\Controllers\Checkoutcontroller@index')->name('index');
-    Route::post('/proccess', 'App\Http\Controllers\Checkoutcontroller@proccess')->name('proccess');
-    Route::get('/thanks', 'App\Http\Controllers\Checkoutcontroller@thanks')->name('thanks');
+    Route::get('/', 'App\Http\Controllers\CheckoutController@index')->name('index');
+    Route::post('/proccess', 'App\Http\Controllers\CheckoutController@proccess')->name('proccess');
+    Route::get('/thanks', 'App\Http\Controllers\CheckoutController@thanks')->name('thanks');
+
+    Route::post('/notification', 'App\Http\Controllers\CheckoutController@notification')->name('notification');
 });
 
 Route::get('my-orders', 'App\Http\Controllers\UserOrderController@index')->name('user.orders')->middleware('auth');
