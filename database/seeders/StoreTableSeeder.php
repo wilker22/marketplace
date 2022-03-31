@@ -18,11 +18,12 @@ class StoreTableSeeder extends Seeder
      */
     public function run()
     {
+        
         $stores = Store::all();
 
         foreach($stores as $store)
         {
-        	$store->products()->save(factory(Product::class)->make());
+        	$store->products()->save(\App\Models\Product::factory()->make());
         }
     }
 }
