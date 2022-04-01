@@ -64,7 +64,7 @@ class ProductController extends Controller
         $categories = $request->get('categories', null);
 
         $data['price'] = formatPriceToDatabase($data['price']);
-      
+              
         $store = auth()->user()->store;
         $product = $store->products()->create($data);
         $product->categories()->sync($categories); //grava com as categorias escolhidas na view       
