@@ -42,6 +42,12 @@ submitButton.addEventListener('click', function(event){
         
         success: function(res){
              processPayment(res.card.token);
+        },
+
+        error: function(err){
+            for(let i in err.errors){
+                document.querySelector('div.msg').innerHTML = showErrorMessages(errorsMapPagseguroJS(i));
+            }
         }
     });
 });
