@@ -17,8 +17,9 @@ class CheckoutController extends Controller
     
     public function index()
     {
-       // session()->forget('pagseguro_session_code');
-        if(!auth()->check()){
+      try{
+         // session()->forget('pagseguro_session_code');
+         if(!auth()->check()){
             return redirect()->route('login');
         }
 
@@ -35,6 +36,10 @@ class CheckoutController extends Controller
        $cartItems = array_sum($cardItems);
 
         return view('checkout', compact('cartItems'));
+      }catch(\Exception $e){
+        session()->forget('pagseguro_session_code');
+        redirect()->route('checkout.index');
+      }
     }
 
 
@@ -122,7 +127,7 @@ class CheckoutController extends Controller
             return response()->json([], 204);
 
         }catch (\Exception $e){
-            $message = env('APP_DEBUG') ? $e->getMessage() : '';
+            $message = env('APP_DEBUG') ? simplexml_load_string($e->getMessage()) : 'Erro ao Processr o pedido!';
             return response()->json(['error' => $message], 500);
         }
 
