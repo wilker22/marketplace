@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Store;
 use App\Models\User;
 use App\Models\UserOrder;
+use App\Payment\PagSeguro\Boleto;
 use App\Payment\PagSeguro\CreditCard;
 use App\Payment\PagSeguro\Notification;
 use Illuminate\Http\Request;
@@ -47,15 +48,18 @@ class CheckoutController extends Controller
     {
         
         try{
+            
             $dataPost = $request->all();
             $user = auth()->user();
             $cartItems = session()->get('cart');
             $stores = array_unique(array_column($cartItems, 'store_id'));
             $reference = Uuid::uuid4();
        
-            $creditCardPayment = new CreditCard($cartItems, $user, $dataPost, $reference);
+            $payment = $dataPost['paymentType'] == 'BOLETO' 
+                        ? new Boleto($cartItems, $user, $reference, $dataPost['hash']) 
+                        : new CreditCard($cartItems, $user, $dataPost, $reference);
             
-            $result = $creditCardPayment->doPayment();
+            $result = $payment->doPayment();
         
 
             $userOrder = [

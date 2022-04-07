@@ -21,11 +21,8 @@ class CreditCard
     {
         
             $creditCard = new \PagSeguro\Domains\Requests\DirectPayment\CreditCard();
-
             $creditCard->setReceiverEmail(env('PAGSEGURO_EMAIL'));
-
             $creditCard->setReference(base64_encode($this->reference));
-
             $creditCard->setCurrency("BRL");
 
             foreach($this->items as $item){

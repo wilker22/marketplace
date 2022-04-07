@@ -1,12 +1,17 @@
-function processPayment(token, buttonTarget)
+function processPayment(token, paymentType)
         {
             let data = {
-                card_token: token,
                 hash: getHash(),
-                installment: document.querySelector('select.select_installments').value,
-                card_name: documente.querySelector('input[name=card_name]').value,
+                paymentType: paymentType,
                 _token: csrf
             };
+
+            if(paymentType === 'CREDITCARD') {
+                
+                data.card_token = token;
+                data.installment = document.querySelector('select.select_installments').value;
+                data.card_name = documente.querySelector('input[name=card_name]').value;
+            }
 
             $.ajax({
                 type: 'POST',
