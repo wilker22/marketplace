@@ -66,7 +66,7 @@ class CheckoutController extends Controller
                 'reference' => $reference,
                 'pagseguro_code' => $this->result->getCode(),
                 'pagseguro_status' => $this->result->getStatus(),
-                'items' => serialize($cartItems),
+                'items' => $cartItems,
               //  'type' => $dataPost['paymentType'],
                // 'link_boleto' => $this->result->getPaymentLink()
                 

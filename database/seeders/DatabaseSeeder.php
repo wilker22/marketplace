@@ -20,11 +20,11 @@ class DatabaseSeeder extends Seeder
        
 
 
-//        User::factory(10)->create();
-       // $this->call([
-            //UsersTableSeeder::class, 
-       //  StoreTableSeeder::class
+        //User::factory(10)->create();
+        //$this->call([
+        //UsersTableSeeder::class, 
+        //StoreTableSeeder::class
         //]);
-        //$this->call(StoreTableSeeder::class);
+        $this->call(StoreTableSeeder::class);
     }
 }
