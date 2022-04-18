@@ -64,9 +64,11 @@ class CheckoutController extends Controller
 
             $userOrder = [
                 'reference' => $reference,
-                'pagseguro_code' => $result->getCode(),
-                'pagseguro_status' => $result->getStatus(),
+                'pagseguro_code' => $this->result->getCode(),
+                'pagseguro_status' => $this->result->getStatus(),
                 'items' => serialize($cartItems),
+              //  'type' => $dataPost['paymentType'],
+               // 'link_boleto' => $this->result->getPaymentLink()
                 
             ];
 
@@ -79,12 +81,16 @@ class CheckoutController extends Controller
             session()->forget('cart');
             session()->forget('pagseguro_session_code');
 
+            $dataJson = [
+                'status' => true,
+                'message' => 'Pedido Criado com sucesso!',
+                'order' => $reference
+            ];
+
+            if($dataPost['paymentType'] == 'BOLETO') $dataJson['link_boleto'] = $this->result->getPaymentLink();
+
             return response()->json([
-                'data' => [
-                    'status' => true,
-                    'message' => 'Pedido Criado com sucesso!',
-                    'order' => $reference
-                ]
+              'data' => $dataJson  
             ]);
            
 
